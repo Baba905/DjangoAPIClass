@@ -39,6 +39,7 @@ class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many = True, read_only= True)
     total_price = serializers.SerializerMethodField()
 
+    # https://www.django-rest-framework.org/api-guide/fields/#serializermethodfield
     def get_total_price(self, obj):
         order_items = obj.items.all()
         return sum(order_item.item_subtotal for order_item in order_items)
@@ -54,3 +55,10 @@ class OrderSerializer(serializers.ModelSerializer):
             "total_price"
         ]
 
+
+# Add a serializer that not attached to a specifique model
+# https://www.django-rest-framework.org/api-guide/serializers/
+class ProductInfoSerializer(serializers.Serializer):
+    products = ProductSerializer(many= True)
+    count = serializers.IntegerField()
+    max_price = serializers.FloatField()
