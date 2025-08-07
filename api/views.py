@@ -62,7 +62,8 @@ class OrderList(generics.ListAPIView):
     serializer_class = OrderSerializer
 
 
-#Get the order from a specific user 
+# Get the order from a specific user 
+# https://www.django-rest-framework.org/api-guide/generic-views/#methods
 class UserOrderList(generics.ListAPIView):
     queryset= Order.objects.prefetch_related('items', 'items__product')
     serializer_class = OrderSerializer
