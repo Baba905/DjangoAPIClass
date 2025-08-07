@@ -61,3 +61,12 @@ class OrderList(generics.ListAPIView):
     queryset= Order.objects.prefetch_related('items', 'items__product')
     serializer_class = OrderSerializer
 
+
+#Get the order from a specific user 
+class UserOrderList(generics.ListAPIView):
+    queryset= Order.objects.prefetch_related('items', 'items__product')
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        queryset= super().get_queryset()
+        return queryset.filter(user = self.request.user)
