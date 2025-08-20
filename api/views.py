@@ -5,7 +5,7 @@ from api.models import Product, Order, OrderItem, User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import generics
-
+from rest_framework.permissions import IsAuthenticated
 """"Function base view """
 
 ## Function base view for product class
@@ -67,6 +67,7 @@ class OrderList(generics.ListAPIView):
 class UserOrderList(generics.ListAPIView):
     queryset= Order.objects.prefetch_related('items', 'items__product')
     serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset= super().get_queryset()
